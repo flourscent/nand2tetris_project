@@ -13,5 +13,52 @@ CHIP Or16 {
     OUT out[16];
 
     PARTS:
-    // Put your code here.
+    Nand(a=a[0], b=a[0], out=nand000);
+    Nand(a=b[0], b=b[0], out=nand001);
+		Nand(a=nand000, b=nand001, out=out[0]);
+    Nand(a=a[1], b=a[1], out=nand100);
+    Nand(a=b[1], b=b[1], out=nand101);
+		Nand(a=nand100, b=nand101, out=out[1]);
+    Nand(a=a[2], b=a[2], out=nand200);
+    Nand(a=b[2], b=b[2], out=nand201);
+		Nand(a=nand200, b=nand201, out=out[2]);
+    Nand(a=a[3], b=a[3], out=nand300);
+    Nand(a=b[3], b=b[3], out=nand301);
+		Nand(a=nand300, b=nand301, out=out[3]);
+    Nand(a=a[4], b=a[4], out=nand400);
+    Nand(a=b[4], b=b[4], out=nand401);
+		Nand(a=nand400, b=nand401, out=out[4]);
+    Nand(a=a[5], b=a[5], out=nand500);
+    Nand(a=b[5], b=b[5], out=nand501);
+		Nand(a=nand500, b=nand501, out=out[5]);
+    Nand(a=a[6], b=a[6], out=nand600);
+    Nand(a=b[6], b=b[6], out=nand601);
+		Nand(a=nand600, b=nand601, out=out[6]);
+    Nand(a=a[7], b=a[7], out=nand700);
+    Nand(a=b[7], b=b[7], out=nand701);
+		Nand(a=nand700, b=nand701, out=out[7]);
+    Nand(a=a[8], b=a[8], out=nand800);
+    Nand(a=b[8], b=b[8], out=nand801);
+		Nand(a=nand800, b=nand801, out=out[8]);
+    Nand(a=a[9], b=a[9], out=nand900);
+    Nand(a=b[9], b=b[9], out=nand901);
+		Nand(a=nand900, b=nand901, out=out[9]);
+    Nand(a=a[10], b=a[10], out=nand1000);
+    Nand(a=b[10], b=b[10], out=nand1001);
+		Nand(a=nand1000, b=nand1001, out=out[10]);
+    Nand(a=a[11], b=a[11], out=nand1100);
+    Nand(a=b[11], b=b[11], out=nand1101);
+		Nand(a=nand1100, b=nand1101, out=out[11]);
+    Nand(a=a[12], b=a[12], out=nand1200);
+    Nand(a=b[12], b=b[12], out=nand1201);
+		Nand(a=nand1200, b=nand1201, out=out[12]);
+    Nand(a=a[13], b=a[13], out=nand1300);
+    Nand(a=b[13], b=b[13], out=nand1301);
+		Nand(a=nand1300, b=nand1301, out=out[13]);
+    Nand(a=a[14], b=a[14], out=nand1400);
+    Nand(a=b[14], b=b[14], out=nand1401);
+		Nand(a=nand1400, b=nand1401, out=out[14]);
+    Nand(a=a[15], b=a[15], out=nand1500);
+    Nand(a=b[15], b=b[15], out=nand1501);
+		Nand(a=nand1500, b=nand1501, out=out[15]);
 }
