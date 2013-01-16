@@ -1,4 +1,4 @@
-// This file is part of www.nand2tetris.org
+// This file is part of www.Nand2tetris.org
 // and the book "The Elements of Computing Systems"
 // by Nisan and Schocken, MIT Press.
 // File name: projects/01/Mux16.hdl
@@ -12,5 +12,69 @@ CHIP Mux16 {
     OUT out[16];
 
     PARTS:
-    // Put your code here.
+		Nand(a=sel, b=sel, out=notsel);
+
+		Nand(a=notsel, b=a[0], out=inner0001);
+		Nand(a=sel, b=b[0], out=inner0002);
+		Nand(a=inner0001, b=inner0002, out=out[0]);
+
+		Nand(a=notsel, b=a[1], out=inner0101);
+		Nand(a=sel, b=b[1], out=inner0102);
+		Nand(a=inner0101, b=inner0102, out=out[1]);
+
+		Nand(a=notsel, b=a[2], out=inner0201);
+		Nand(a=sel, b=b[2], out=inner0202);
+		Nand(a=inner0201, b=inner0202, out=out[2]);
+
+		Nand(a=notsel, b=a[3], out=inner0301);
+		Nand(a=sel, b=b[3], out=inner0302);
+		Nand(a=inner0301, b=inner0302, out=out[3]);
+
+		Nand(a=notsel, b=a[4], out=inner0401);
+		Nand(a=sel, b=b[4], out=inner0402);
+		Nand(a=inner0401, b=inner0402, out=out[4]);
+
+		Nand(a=notsel, b=a[5], out=inner0501);
+		Nand(a=sel, b=b[5], out=inner0502);
+		Nand(a=inner0501, b=inner0502, out=out[5]);
+
+		Nand(a=notsel, b=a[6], out=inner0601);
+		Nand(a=sel, b=b[6], out=inner0602);
+		Nand(a=inner0601, b=inner0602, out=out[6]);
+
+		Nand(a=notsel, b=a[7], out=inner0701);
+		Nand(a=sel, b=b[7], out=inner0702);
+		Nand(a=inner0701, b=inner0702, out=out[7]);
+
+		Nand(a=notsel, b=a[8], out=inner0801);
+		Nand(a=sel, b=b[8], out=inner0802);
+		Nand(a=inner0801, b=inner0802, out=out[8]);
+
+		Nand(a=notsel, b=a[9], out=inner0901);
+		Nand(a=sel, b=b[9], out=inner0902);
+		Nand(a=inner0901, b=inner0902, out=out[9]);
+
+		Nand(a=notsel, b=a[10], out=inner1001);
+		Nand(a=sel, b=b[10], out=inner1002);
+		Nand(a=inner1001, b=inner1002, out=out[10]);
+
+		Nand(a=notsel, b=a[11], out=inner1101);
+		Nand(a=sel, b=b[11], out=inner1102);
+		Nand(a=inner1101, b=inner1102, out=out[11]);
+
+		Nand(a=notsel, b=a[12], out=inner1201);
+		Nand(a=sel, b=b[12], out=inner1202);
+		Nand(a=inner1201, b=inner1202, out=out[12]);
+
+		Nand(a=notsel, b=a[13], out=inner1301);
+		Nand(a=sel, b=b[13], out=inner1302);
+		Nand(a=inner1301, b=inner1302, out=out[13]);
+
+		Nand(a=notsel, b=a[14], out=inner1401);
+		Nand(a=sel, b=b[14], out=inner1402);
+		Nand(a=inner1401, b=inner1402, out=out[14]);
+
+		Nand(a=notsel, b=a[15], out=inner1501);
+		Nand(a=sel, b=b[15], out=inner1502);
+		Nand(a=inner1501, b=inner1502, out=out[15]);
 }
