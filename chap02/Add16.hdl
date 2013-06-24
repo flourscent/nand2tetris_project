@@ -13,5 +13,20 @@ CHIP Add16 {
     OUT out[16];
 
     PARTS:
-    // Put your code here.
+    HalfAdder(a=a[0], b=b[0], sum=out[0], carry=inner01);
+    FullAdder(a=a[1], b=b[1], c=inner01, sum=out[1], carry=inner02);
+    FullAdder(a=a[2], b=b[2], c=inner02, sum=out[2], carry=inner03);
+    FullAdder(a=a[3], b=b[3], c=inner03, sum=out[3], carry=inner04);
+    FullAdder(a=a[4], b=b[4], c=inner04, sum=out[4], carry=inner05);
+    FullAdder(a=a[5], b=b[5], c=inner05, sum=out[5], carry=inner06);
+    FullAdder(a=a[6], b=b[6], c=inner06, sum=out[6], carry=inner07);
+    FullAdder(a=a[7], b=b[7], c=inner07, sum=out[7], carry=inner08);
+    FullAdder(a=a[8], b=b[8], c=inner08, sum=out[8], carry=inner09);
+    FullAdder(a=a[9], b=b[9], c=inner09, sum=out[9], carry=inner10);
+    FullAdder(a=a[10], b=b[10], c=inner10, sum=out[10], carry=inner11);
+    FullAdder(a=a[11], b=b[11], c=inner11, sum=out[11], carry=inner12);
+    FullAdder(a=a[12], b=b[12], c=inner12, sum=out[12], carry=inner13);
+    FullAdder(a=a[13], b=b[13], c=inner13, sum=out[13], carry=inner14);
+    FullAdder(a=a[14], b=b[14], c=inner14, sum=out[14], carry=inner15);
+    FullAdder(a=a[15], b=b[15], c=inner15, sum=out[15], carry=inner16);
 }
