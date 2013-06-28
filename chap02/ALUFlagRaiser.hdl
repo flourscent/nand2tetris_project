@@ -1,0 +1,17 @@
+CHIP ALUFlagRaiser {
+    IN
+		  in[16];
+		OUT
+		  zr,
+			ng;
+
+		PARTS:
+		  // zr flag
+		  Or8Way(in=in[0..7], out=zr1);
+			Or8Way(in=in[8..15], out=zr2);
+			Or(a=zr1, b=zr2, out=nzr);
+			Not(in=nzr, out=zr);
+
+			// ng flag
+			And(a=in[15], b=true, out=ng);
+}
