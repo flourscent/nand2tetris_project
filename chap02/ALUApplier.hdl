@@ -1,17 +1,17 @@
 CHIP ALUApplier {
     IN 
-			x[16], 
-			y[16], 
-			fc, 
-			no;
-		OUT 
-		  out[16];
+      x[16], 
+      y[16], 
+      fc, 
+      no;
+    OUT 
+      out[16];
 
-		PARTS:
-		  And16(a=x, b=y, out=andedxy);
-			Add16(a=x, b=y, out=addedxy);
-			Mux16(a=andedxy, b=addedxy, sel=fc, out=applied);
+    PARTS:
+      And16(a=x, b=y, out=andedxy);
+      Add16(a=x, b=y, out=addedxy);
+      Mux16(a=andedxy, b=addedxy, sel=fc, out=applied);
 
-			Not16(in=applied, out=negapplied);
-			Mux16(a=applied, b=negapplied, sel=no, out=out);
+      Not16(in=applied, out=negapplied);
+      Mux16(a=applied, b=negapplied, sel=no, out=out);
 }

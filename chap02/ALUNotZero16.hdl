@@ -1,9 +1,9 @@
 CHIP ALUNotZero16 {
   IN in[16], notflag, zeroflag;
-	OUT out[16];
+  OUT out[16];
 
-	PARTS:
-	Mux16(a=in, b=false, sel=zeroflag, out=zerores);
-	Not16(in=zerores, out=negin);
-	Mux16(a=zerores, b=negin, sel=notflag, out=out);
+  PARTS:
+  Mux16(a=in, b=false, sel=zeroflag, out=zerores);
+  Not16(in=zerores, out=negin);
+  Mux16(a=zerores, b=negin, sel=notflag, out=out);
 }

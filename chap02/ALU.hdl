@@ -49,8 +49,8 @@ CHIP ALU {
 
     PARTS:
         ALUNotZero16(in=x, notflag=nx, zeroflag=zx, out=nzedx);
-				ALUNotZero16(in=y, notflag=ny, zeroflag=zy, out=nzedy);
-				ALUApplier(x=nzedx, y=nzedy, fc=f, no=no, out=applied);
-				ALUFlagRaiser(in=applied, zr=zr, ng=ng);
-				And16(a=applied, b=true, out=out);
+        ALUNotZero16(in=y, notflag=ny, zeroflag=zy, out=nzedy);
+        ALUApplier(x=nzedx, y=nzedy, fc=f, no=no, out=applied);
+        ALUFlagRaiser(in=applied, zr=zr, ng=ng);
+        And16(a=applied, b=true, out=out);
 }
