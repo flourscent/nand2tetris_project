@@ -38,5 +38,66 @@ CHIP CPU {
         pc[15];          // ROM address (of next instruction)
 
      PARTS:
-    // Put your code here.
+    InsDecoder(instruction=instruction, c=c, ca=ca, 
+      ccomp[0]=ccomp1, 
+      ccomp[1]=ccomp2, 
+      ccomp[2]=ccomp3, 
+      ccomp[3]=ccomp4, 
+      ccomp[4]=ccomp5, 
+      ccomp[5]=ccomp6, 
+      cdest[0]=cdest1, 
+      cdest[1]=cdest2, 
+      cdest[2]=cdest3, 
+      cjump[0]=cjump1, 
+      cjump[1]=cjump2, 
+      cjump[2]=cjump3, 
+      aaddr=aaddr);
+
+    ALU(
+      x=dout, 
+      y=aluy, 
+      zx=ccomp1,
+      nx=ccomp2,
+      zy=ccomp3,
+      ny=ccomp4, 
+      f =ccomp5, 
+      no=ccomp6, 
+      out=aluout, 
+      zr=zrout, 
+      ng=ngout);
+
+
+    // registers
+    ARegister(in=regain, load=loadain, out=aout); // A
+    DRegister(in=aluout, load=cdest2, out=dout); // D
+    Mux16(a=aout, b=inM, sel=ca, out=aluy);
+    Not(in=c, out=a);
+    Or(a=cdest1, b=a, out=loadain);
+    Mux16(a=aluout, b=aaddr, sel=a, out=regain);
+
+    // destination
+    And16(a=true, b=aluout, out=outM); // outMBus
+    And16(a=true, b=aout, out[0..14]=addressM);
+    And(a=c, b=cdest3, out=writeM);
+
+    // jump
+    Mux(a=false,  b=jgtval, sel=cjump3, out=mux1out);
+    Mux(a=jeqval, b=jgeval, sel=cjump3, out=mux2out);
+    Mux(a=jltval, b=jneval, sel=cjump3, out=mux3out);
+    Mux(a=jleval, b=true,   sel=cjump3, out=mux4out);
+    Mux(a=mux1out, b=mux2out, sel=cjump2, out=mux5out);
+    Mux(a=mux3out, b=mux4out, sel=cjump2, out=mux6out);
+    Mux(a=mux5out, b=mux6out, sel=cjump1, out=jmp);
+    Not(in=ngout, out=notngout);
+    Not(in=zrout, out=notzrout);
+    And(a=notzrout, b=notngout, out=jgtval);
+    And(a=zrout, b=notngout, out=jeqval);
+    And(a=true, b=notngout, out=jgeval);
+    And(a=notzrout, b=ngout, out=jltval);
+    And(a=true, b=notzrout, out=jneval);
+    Xor(a=zrout, b=ngout, out=jleval);
+    Not(in=jmp, out=notjmp);
+
+    // program counter
+    PC(in=aout, load=jmp, inc=notjmp, reset=reset, out[0..14]=pc);
 }
