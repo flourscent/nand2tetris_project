@@ -1,0 +1,60 @@
+/**
+ * 
+ * 
+ */
+CHIP InsDecoder {
+  IN 
+    instruction[16];
+
+  OUT
+    c,  // c inst?
+    ca, // a in comp
+    ccomp[6], // comp
+    cdest[3], // dest
+    cjump[3], // jump
+    aaddr[16];// value of a in ainst
+
+  PARTS:
+	// a inst
+	And(a=true, b=instruction[15], out=iscins);
+	Mux16(a=instruction, b=false, sel=iscins, out=aaddr);
+
+	// c
+	And(a=true, b=iscins, out=c);
+
+	// cjump
+	Mux(a=false, b=instruction[0], sel=iscins, out=cjump[2]);
+	Mux(a=false, b=instruction[1], sel=iscins, out=cjump[1]);
+	Mux(a=false, b=instruction[2], sel=iscins, out=cjump[0]);
+
+	// cdest
+	Mux(a=false, b=instruction[3], sel=iscins, out=cdest[2]);
+	Mux(a=false, b=instruction[4], sel=iscins, out=cdest[1]);
+	Mux(a=false, b=instruction[5], sel=iscins, out=cdest[0]);
+
+	// ccomp
+	Mux(a=true, b=instruction[6], sel=iscins, out=ccomp[5]);
+	Mux(a=true, b=instruction[7], sel=iscins, out=ccomp[4]);
+	Mux(a=true, b=instruction[8], sel=iscins, out=ccomp[3]);
+	Mux(a=true, b=instruction[9], sel=iscins, out=ccomp[2]);
+	Mux(a=true, b=instruction[10], sel=iscins, out=ccomp[1]);
+	Mux(a=true, b=instruction[11], sel=iscins, out=ccomp[0]);
+
+	// ca
+	Mux(a=false, b=instruction[12], sel=iscins, out=ca);
+
+	//fedc ba98 7654 3210
+	//f == 1
+	//210 == 210
+	//543 == 543
+	//ba9876 == ba9876
+	//c == c
+	//ed == ed
+
+	//f == 0
+	//210 == 000
+	//543 == 000
+	//ba9876 == 111111
+	//c == 0
+	//ed == ??
+}
