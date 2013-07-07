@@ -8,6 +8,6 @@
 @2
 D=A
 @3
-D=D+A
+D=D+A // this must be eliminated
 @0
 M=D
