@@ -3,6 +3,8 @@
 import sys
 
 # address table
+symbolStartAddr = 16
+
 lTable = {
  'SP':'0',
  'LCL':'1',
@@ -129,6 +131,7 @@ def translate(parsed):
       
 # parse
 def parse(inputFile):
+  global symbolStartAddr
   lines = preprocess(inputFile.readlines())
 
   parsedLines = []
@@ -177,8 +180,9 @@ def parse(inputFile):
       if parsedLine['addr'] in lTable:
         parsedLine['addr'] = lTable[parsedLine['addr']]
       else:
-        parsedLine['addr'] = instCount
-        instCount += 1
+        lTable[parsedLine['addr']] = symbolStartAddr
+        parsedLine['addr'] = symbolStartAddr
+        symbolStartAddr += 1
 
   return parsedLines
 
