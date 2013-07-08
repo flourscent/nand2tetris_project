@@ -88,33 +88,39 @@ destCodes = {
 def main():
   ARGS_REQUIRED = 2
   ARGS_WITH_OUTPUT = 3
-
   if len(sys.argv) < ARGS_REQUIRED:
     print "invalid argument"
     print "Usage : " + sys.argv[0] + " asmFile.asm [hackFile.hack]"
     return 1
-  
+
+  files = openFiles(sys.argv)
+  parsed = parse(files['in'])
+  translated = translate(parsed)
+  writeToFile(files['out'], translated)
+
+def openFiles(argv):
   # input / output
-  inputFileName = sys.argv[1];
+  inputFileName = argv[1];
   if len(sys.argv) < ARGS_WITH_OUTPUT:
     outputFileName = inputFileName[0:-3] + "hack"
   else:
-    outputFileName = sys.argv[2];
-
+    outputFileName = argv[2];
   try:
     inputFile = open(inputFileName, 'r')
   except IOError:
     print "[ERROR] : " + inputFileName + " doesn't exist."
   outputFile = open(outputFileName, 'w');
 
-  parsed = parse(inputFile)
-  
-  translated = translate(parsed)
-  writeToFile(outputFile, translated)
+  files = {}
+  files['in'] = inputFile
+  files['out'] = outputFile
+  return files
+
 
 def writeToFile(outputFile, translated):
   for line in translated:
     outputFile.write(line + '\r\n')
+
 
 def translate(parsed):
   translatedLines = []
@@ -128,34 +134,33 @@ def translate(parsed):
       translatedLine = '111' + compCodes[parsedLine['comp']] + destCodes[parsedLine['dest']] + jumpCodes[parsedLine['jump']]
     translatedLines.append(translatedLine)
   return translatedLines
-      
+
+
 # parse
 def parse(inputFile):
   global symbolStartAddr
   lines = preprocess(inputFile.readlines())
-
   parsedLines = []
-
   instCount = 0
 
   # first pass
   for line in lines:
     parsedLine = {}
 
-    if line.startswith('@'):
     # a inst -- @ADDR, @LABEL
+    if line.startswith('@'):
       parsedLine['inst'] = 'a'
       parsedLine['addr'] = line[1:]
       parsedLines.append(parsedLine)
       instCount+=1
-    elif line.startswith('(') and line.endswith(')'):
     # label -- (LABEL)
+    elif line.startswith('(') and line.endswith(')'):
       parsedLine['inst']='l'
       label = line[1:-1]
       if label not in lTable:
         lTable[label] = instCount
-    elif line.find(';') != -1 or line.find('=') != -1:
     # c inst -- dest=comp;jump, comp;jump, dest=comp
+    elif line.find(';') != -1 or line.find('=') != -1:
       parsedLine['inst']='c'
       posSemicolon = line.find(';');
       posEqual = line.find('=');
@@ -186,12 +191,13 @@ def parse(inputFile):
 
   return parsedLines
 
-# preprocess -- strip, remove comments
+
+# preprocess -- remove trailing whitespace characters, comments
 def preprocess(lines):
-  processed = map(lambda line : line.strip(), lines)
-  inlineComment = map(lambda line : line[0:len(line) if line.find("//") < 0 else line.find("//")], processed)
-  comment = filter(lambda x : len(x.strip()) != 0, inlineComment)
-  return comment
+  wsRemoved= map(lambda line : line.strip(), lines)
+  cmtRemoved = map(lambda line : line[0:len(line) if line.find("//") < 0 else line.find("//")], wsRemoved)
+  cmtRemoved= filter(lambda x : len(x.strip()) != 0, cmdRemoved)
+  return cmdRemoved
 
 if __name__ == "__main__":
   main()
