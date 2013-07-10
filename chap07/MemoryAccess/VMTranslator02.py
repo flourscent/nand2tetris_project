@@ -27,14 +27,18 @@ commandPtns = {
 			'argument' : '@__INDEX__\r\nD=A\r\n@2\r\nA=M+D\r\nD=M\r\n@0\r\nA=M\r\nM=D\r\n@0\r\nM=M+1\r\n',
 			'this'     : '@__INDEX__\r\nD=A\r\n@3\r\nA=M+D\r\nD=M\r\n@0\r\nA=M\r\nM=D\r\n@0\r\nM=M+1\r\n',
 			'that'     : '@__INDEX__\r\nD=A\r\n@4\r\nA=M+D\r\nD=M\r\n@0\r\nA=M\r\nM=D\r\n@0\r\nM=M+1\r\n',
-			'temp'     : '@__INDEX__\r\nD=A\r\n@5\r\nA=A+D\r\nD=M\r\n@0\r\nA=M\r\nM=D\r\n@0\r\nM=M+1\r\n'
+			'temp'     : '@__INDEX__\r\nD=A\r\n@5\r\nA=A+D\r\nD=M\r\n@0\r\nA=M\r\nM=D\r\n@0\r\nM=M+1\r\n',
+			'pointer'  : '@__INDEX__\r\nD=A\r\n@3\r\nA=A+D\r\nD=M\r\n@0\r\nA=M\r\nM=D\r\n@0\r\nM=M+1\r\n',
+			'static'   : '@__INDEX__\r\nD=A\r\n@16\r\nA=A+D\r\nD=M\r\n@0\r\nA=M\r\nM=D\r\n@0\r\nM=M+1\r\n'
     },
 		'pop':{
       'local'    : '@__INDEX__\r\nD=A\r\n@1\r\nD=M+D\r\n@13\r\nM=D\r\n@0\r\nA=M-1\r\nD=M\r\nM=0\r\n@0\r\nM=M-1\r\n@13\r\nA=M\r\nM=D\r\n',
       'argument' : '@__INDEX__\r\nD=A\r\n@2\r\nD=M+D\r\n@13\r\nM=D\r\n@0\r\nA=M-1\r\nD=M\r\nM=0\r\n@0\r\nM=M-1\r\n@13\r\nA=M\r\nM=D\r\n',
       'this'     : '@__INDEX__\r\nD=A\r\n@3\r\nD=M+D\r\n@13\r\nM=D\r\n@0\r\nA=M-1\r\nD=M\r\nM=0\r\n@0\r\nM=M-1\r\n@13\r\nA=M\r\nM=D\r\n',
       'that'     : '@__INDEX__\r\nD=A\r\n@4\r\nD=M+D\r\n@13\r\nM=D\r\n@0\r\nA=M-1\r\nD=M\r\nM=0\r\n@0\r\nM=M-1\r\n@13\r\nA=M\r\nM=D\r\n',
-      'temp'     : '@__INDEX__\r\nD=A\r\n@5\r\nD=A+D\r\n@13\r\nM=D\r\n@0\r\nA=M-1\r\nD=M\r\nM=0\r\n@0\r\nM=M-1\r\n@13\r\nA=M\r\nM=D\r\n'
+      'temp'     : '@__INDEX__\r\nD=A\r\n@5\r\nD=A+D\r\n@13\r\nM=D\r\n@0\r\nA=M-1\r\nD=M\r\nM=0\r\n@0\r\nM=M-1\r\n@13\r\nA=M\r\nM=D\r\n',
+      'pointer'  : '@__INDEX__\r\nD=A\r\n@3\r\nD=A+D\r\n@13\r\nM=D\r\n@0\r\nA=M-1\r\nD=M\r\nM=0\r\n@0\r\nM=M-1\r\n@13\r\nA=M\r\nM=D\r\n',
+      'static'   : '@__INDEX__\r\nD=A\r\n@16\r\nD=A+D\r\n@13\r\nM=D\r\n@0\r\nA=M-1\r\nD=M\r\nM=0\r\n@0\r\nM=M-1\r\n@13\r\nA=M\r\nM=D\r\n'
 		}
   },
   'operlog':{
