@@ -2,6 +2,10 @@
 
 import sys
 
+# global
+ARGS_REQUIRED = 2
+ARGS_WITH_OUTPUT = 3
+
 # address table
 symbolStartAddr = 16
 
@@ -86,8 +90,7 @@ destCodes = {
 
 # main driver
 def main():
-  ARGS_REQUIRED = 2
-  ARGS_WITH_OUTPUT = 3
+  global ARGS_REQUIRED
   if len(sys.argv) < ARGS_REQUIRED:
     print "invalid argument"
     print "Usage : " + sys.argv[0] + " asmFile.asm [hackFile.hack]"
@@ -100,6 +103,7 @@ def main():
 
 def openFiles(argv):
   # input / output
+  global ARGS_WITH_OUTPUT
   inputFileName = argv[1];
   if len(sys.argv) < ARGS_WITH_OUTPUT:
     outputFileName = inputFileName[0:-3] + "hack"
@@ -196,8 +200,8 @@ def parse(inputFile):
 def preprocess(lines):
   wsRemoved= map(lambda line : line.strip(), lines)
   cmtRemoved = map(lambda line : line[0:len(line) if line.find("//") < 0 else line.find("//")], wsRemoved)
-  cmtRemoved= filter(lambda x : len(x.strip()) != 0, cmdRemoved)
-  return cmdRemoved
+  cmtRemoved= filter(lambda x : len(x.strip()) != 0, cmtRemoved)
+  return cmtRemoved
 
 if __name__ == "__main__":
   main()
