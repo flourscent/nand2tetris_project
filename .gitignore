@@ -2,4 +2,5 @@
 chap04/**/*.hack
 chap05/**/*.hack
 chap06/**/My*.hack
+chap07/**/*.asm
 
