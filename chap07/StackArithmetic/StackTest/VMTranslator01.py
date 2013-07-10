@@ -39,7 +39,7 @@ commandPtns = {
   'operbit':{
     'and' : '---POP2REGD---M=M&D\r\n',
     'or'  : '---POP2REGD---M=M|D\r\n',
-    'not' : 'A=M-1\r\nM=!M\r\n'
+    'not' : '@0\r\nA=M-1\r\nM=!M\r\n'
     },
 
   'ptns': {
