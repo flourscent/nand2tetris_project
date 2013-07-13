@@ -15,7 +15,7 @@ cmdTypes = {
   'and' : 'operbit',
   'or'  : 'operbit',
   'not' : 'operbit',
-  'if'  : 'operjmp',
+  'goto'  : 'operjmp',
   'if-goto' : 'operjmp',
   'label'   : 'operjmp'
 }
@@ -60,7 +60,7 @@ commandPtns = {
     'not' : '@0\r\nA=M-1\r\nM=!M\r\n'
     },
   'operjmp':{
-    'if' : '@__LABEL__\r\n',
+    'goto' : '@__LABEL__\r\n0;JMP\r\n',
     'if-goto' : '---POP2REGD---@__LABEL__\r\nD;JNE\r\n',
     'label' : '(__LABEL__)\r\n'
     },
