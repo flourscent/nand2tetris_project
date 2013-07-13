@@ -17,7 +17,9 @@ cmdTypes = {
   'not' : 'operbit',
   'goto'  : 'operjmp',
   'if-goto' : 'operjmp',
-  'label'   : 'operjmp'
+  'label'   : 'operjmp',
+  'function' : 'operfct',
+  'return'   : 'operfct'
 }
 
 commandPtns = {
@@ -64,9 +66,22 @@ commandPtns = {
     'if-goto' : '---POP2REGD---@__LABEL__\r\nD;JNE\r\n',
     'label' : '(__LABEL__)\r\n'
     },
+  'operfct':{
+    'function':'(__FCTNAME__)\r\n@__LOCCNT__\r\nD=A\r\n(INIT__FCTNAME__LOOP)\r\n@0\r\nD=D-1\r\nA=M+D\r\nM=0\r\n@0\r\nM=M+1\r\n@INIT__FCTNAME__LOOP\r\nD;JGT\r\n',
+    'return'  :'---LCL2R13------RETADDR2R14------RSTRPOP------RSTRSP------RSTRTHAT------RSTRTHIS------RSTRARG------RSTRLCL------GOTORET---'
+    },
 
   'ptns': {
-    '---POP2REGD---' : '@0\r\nA=M-1\r\nD=M\r\nM=0\r\n@0\r\nM=M-1\r\nA=M-1\r\n'
+    '---POP2REGD---' : '@0\r\nA=M-1\r\nD=M\r\nM=0\r\n@0\r\nM=M-1\r\nA=M-1\r\n',
+    '---LCL2R13---'  : '@1\r\nD=M\r\n@13\r\nM=D\r\n',
+    '---RETADDR2R14---'  : '@13\r\nD=M\r\n@5\r\nA=D-A\r\nD=M\r\n@14\r\nM=D\r\n',
+    '---RSTRPOP---'  : '@0\r\nA=M-1\r\nD=M\r\nM=0\r\n@0\r\nM=M-1\r\nA=M-1\r\n@2\r\nA=M\r\nM=D\r\n',
+    '---RSTRSP---'   : '@2\r\nD=M+1\r\n@0\r\nM=D\r\n',
+    '---RSTRTHAT---' : '@13\r\nA=M-1\r\nD=M\r\n@4\r\nM=D\r\n',
+    '---RSTRTHIS---' : '@13\r\nD=M\r\n@2\r\nA=D-A\r\nD=M\r\n@3\r\nM=D\r\n',
+    '---RSTRARG---'  : '@13\r\nD=M\r\n@3\r\nA=D-A\r\nD=M\r\n@2\r\nM=D\r\n',
+    '---RSTRLCL---'  : '@13\r\nD=M\r\n@4\r\nA=D-A\r\nD=M\r\n@1\r\nM=D\r\n',
+    '---GOTORET---'  : '@14\r\nA=M\r\n0;JMP\r\n'
   }
 }
 
@@ -124,6 +139,10 @@ def parse(inputFile):
       parsedLine['index'] = splitedLine[2]
     elif parsedLine['cmdType'] == 'operjmp':
       parsedLine['label'] = splitedLine[1]
+    elif parsedLine['cmdType'] == 'operfct':
+      if parsedLine['cmd'] != 'return':
+        parsedLine['fctName'] = splitedLine[1]
+        parsedLine['localCnt'] = splitedLine[2]
     parsedLines.append(parsedLine)
   return parsedLines
 
@@ -145,6 +164,13 @@ def translate(parsed, settings):
       translated = commandPtns[line['cmdType']][line['cmd']]
       translated = intermediateTranslate(translated)
       translated = translated.replace('__LABEL__', line['label'])
+    elif line['cmdType'] == 'operfct':
+      translated = commandPtns[line['cmdType']][line['cmd']]
+      translated = intermediateTranslate(translated)
+      print translated
+      if line['cmd'] != 'return':
+        translated = translated.replace('__LOCCNT__', line['localCnt'])
+        translated = translated.replace('__FCTNAME__', line['fctName'])
     elif line['cmdType'].startswith('oper'):
       translated = commandPtns[line['cmdType']][line['cmd']]
       translated = intermediateTranslate(translated)
@@ -156,8 +182,8 @@ def translate(parsed, settings):
 
 def intermediateTranslate(cmdPtn):
   for key in commandPtns['ptns']:
-    replaced = cmdPtn.replace(key, commandPtns['ptns'][key])
-  return replaced
+    cmdPtn = cmdPtn.replace(key, commandPtns['ptns'][key])
+  return cmdPtn
 
 def writeToFile(outputFile, translated):
   for line in translated:
